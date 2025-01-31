@@ -7,9 +7,7 @@ import br.com.alura.ProjetoAlura.util.ErrorItemDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.Optional;
@@ -59,4 +57,36 @@ public class CourseController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(course);
     }
+
+    @PostMapping("/course/{code}/inactive")
+    public ResponseEntity<?> inactivateCourse(@PathVariable("code") String courseCode, @Valid @RequestBody InactivateCourseDTO request) {
+
+        String inactivationReason = request.getInactivationReason();
+
+        if (inactivationReason == null || inactivationReason.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorItemDTO("inactivationReason", "É necessário incluir o motivo da inativação"));
+        }
+
+        Optional<Course> optionalCourse = courseRepository.findByCode(courseCode);
+
+        if (optionalCourse.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorItemDTO("courseCode", "Curso não encontrado com o código: " + courseCode));
+        }
+
+        Course course = optionalCourse.get();
+
+        if (course.getStatus() == Status.INACTIVE) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorItemDTO("status", "Curso já está inativo"));
+        }
+
+        course.setInactivationReason(inactivationReason);
+        course.inactivated();
+        courseRepository.save(course);
+
+        return ResponseEntity.ok(course);
+    }
+
 }

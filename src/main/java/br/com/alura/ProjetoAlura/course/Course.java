@@ -1,5 +1,6 @@
 package br.com.alura.ProjetoAlura.course;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -15,7 +16,9 @@ public class Course {
     @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVE;
 
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime inactivatedAt;
+    private String inactivationReason;
     private String name;
 
     @Column(unique = true)
@@ -34,6 +37,7 @@ public class Course {
         this.instructor = instructor;
         this.description = description;
         this.inactivatedAt = null;
+        this.inactivationReason = null;
     }
 
     public String getName() {
@@ -60,8 +64,17 @@ public class Course {
         return inactivatedAt;
     }
 
+    public String getInactivationReason() {
+        return inactivationReason;
+    }
+
+    public void setInactivationReason(String inactivationReason) {
+        this.inactivationReason = inactivationReason;
+    }
+
     public void inactivated() {
         this.status = Status.INACTIVE;
         this.inactivatedAt = LocalDateTime.now();
+        this.inactivationReason = inactivationReason;
     }
 }

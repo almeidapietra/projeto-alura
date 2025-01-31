@@ -1,0 +1,2 @@
+ALTER TABLE Course
+    ADD COLUMN inactivationReason VARCHAR(255) DEFAULT NULL;
