@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class RegistrationController {
@@ -65,36 +66,18 @@ public class RegistrationController {
 
     @GetMapping("/registration/report")
     public ResponseEntity<List<RegistrationReportItem>> report() {
-        List<RegistrationReportItem> items = new ArrayList<>();
+        List<Object[]> results = registrationRepository.generateRegistrationReport();
 
-        // TODO: Implementar a Questão 4 - Relatório de Cursos Mais Acessados aqui...
-
-        // Dados fictícios abaixo que devem ser substituídos
-        items.add(new RegistrationReportItem(
-                "Java para Iniciantes",
-                "java",
-                "Charles",
-                "charles@alura.com.br",
-                10L
-        ));
-
-        items.add(new RegistrationReportItem(
-                "Spring para Iniciantes",
-                "spring",
-                "Charles",
-                "charles@alura.com.br",
-                9L
-        ));
-
-        items.add(new RegistrationReportItem(
-                "Maven para Avançados",
-                "maven",
-                "Charles",
-                "charles@alura.com.br",
-                9L
-        ));
+        List<RegistrationReportItem> items = results.stream()
+                .map(row -> new RegistrationReportItem(
+                        (String) row[0],
+                        (String) row[1],
+                        (String) row[2],
+                        (String) row[3],
+                        ((Number) row[4]).longValue()
+                ))
+                .collect(Collectors.toList());
 
         return ResponseEntity.ok(items);
     }
-
 }
