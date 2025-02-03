@@ -95,3 +95,39 @@ Agora que temos usuários e matrículas, queremos gerar um relatório para ident
 
 > [!TIP]
 > Para uma melhor organização dos commits, considere seguir as [convenções de commits](https://www.conventionalcommits.org/pt-br/v1.0.0/). Isso ajuda a manter um histórico claro e compreensível do projeto.
+
+---------------------------------------------
+## Entregas
+
+### Questão 1 - Cadastro de Cursos ✅
+- Implementada validação para código único do curso 
+- Criado sistema de validação para permitir apenas instrutores cadastrarem cursos
+- Implementada definição automática de status ACTIVE para novos cursos
+- Desenvolvidos testes unitários para validar todas as regras de negócio
+
+### Questão 2 - Inativação de Cursos ✅
+- Implementado endpoint `/course/{code}/inactive` para inativação de cursos
+- Criado sistema de registro automático da data de inativação
+- Desenvolvida validação do motivo de inativação
+- Adicionados testes para cenários de inativação
+
+### Questão 3 - Matrícula de Alunos ✅
+- Implementado sistema completo de matrículas
+- Desenvolvida validação para evitar matrículas duplicadas
+- Criada validação para permitir matrículas apenas em cursos ativos
+- Implementados testes para validar regras de matrícula
+
+### Questão 4 - Relatório de Cursos Mais Acessados ✅
+- Implementado endpoint `/registration/report` com SQL nativo
+- Otimizada consulta para evitar problema N+1
+- Desenvolvido sistema de ordenação por número de inscrições
+- Criada estrutura eficiente de retorno dos dados
+
+## Desenvolvido por
+**Pietra Almeida**
+
+### Contatos
+<div> 
+    <a href = "mailto:costapietra@gmail.com"><img loading="lazy" src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>
+    <a href="https://www.linkedin.com/in/almeidapietra" target="_blank"><img loading="lazy" src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a>   
+</div>
