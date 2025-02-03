@@ -55,7 +55,8 @@ public class CourseController {
 
         courseRepository.save(course);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(course);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+
     }
 
     @PostMapping("/course/{code}/inactive")
@@ -86,7 +87,7 @@ public class CourseController {
         course.inactivated();
         courseRepository.save(course);
 
-        return ResponseEntity.ok(course);
+        return ResponseEntity.noContent().build();
     }
 
 }

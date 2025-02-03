@@ -46,7 +46,7 @@ public class UserController {
         User user = newInstructor.toModel();
         userRepository.save(user);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/user/all")
